@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Afterdawn | Film Production, Photography & Brand Stories</title>
+  <meta name="description" content="Afterdawn is a creative studio specializing in film production, photography, branding, and digital marketing. We craft stories that outlast the dark." />
+
+  <!-- Flag JS as available before paint, so motion initial-states apply
+       without a flash — and content stays visible if JS never runs. -->
+  <script>document.documentElement.classList.add('js');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Skip link — first focusable element for keyboard users -->
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"><span class="cursor-label">View</span></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <a href="#top" class="nav-logo">Afterdawn</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="btn btn-primary nav-cta">Start a Project</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Smooth-scroll wrapper -->
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-media">
+        <img class="hero-video is-ready cine-grade"
+             src="https://wallpapercave.com/wp/wp11884071.jpg"
+             alt="Aftersun film still" />
+        <video class="hero-video cine-grade" autoplay muted loop playsinline
+               poster="https://wallpapercave.com/wp/wp11884071.jpg"
+               aria-label="Golden hour cinematic background">
+          <source src="assets/hero-bg.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-overlay"></div>
+      </div>
+
+      <div class="wrap hero-content">
+        <p class="eyebrow hero-eyebrow">Creative Studio</p>
+        <h1 class="display hero-headline" data-splitting>
+          Stories that outlast the <span class="accent">dark.</span>
+        </h1>
+        <p class="body-large hero-sub">Film production, photography, and brand stories for those who refuse to be forgotten.</p>
+        <div class="hero-ctas">
+          <a href="#work" class="btn btn-primary">View Our Work</a>
+          <a href="#contact" class="btn btn-secondary">Start a Project</a>
+        </div>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">
+        <svg width="20" height="28" viewBox="0 0 20 28" fill="none">
+          <path d="M10 2v22M3 17l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services" id="services">
+      <div class="wrap">
+        <header class="section-header">
+          <p class="eyebrow">What We Do</p>
+          <h2 class="h1" data-splitting>Our best Services</h2>
+        </header>
+
+        <div class="service-list">
+          <article class="service-row">
+            <h3 class="service-name">Film Production</h3>
+            <p class="service-desc">Concept to final cut. Commercials, music videos, and branded films with cinematic intent.</p>
+            <span class="service-link">Explore →</span>
+            <img class="service-preview cine-grade" loading="lazy" alt="Behind the scenes on a film set, camera on dolly in warm light"
+                 src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=640&auto=format&fit=crop" />
+          </article>
+
+          <article class="service-row">
+            <h3 class="service-name">Photography</h3>
+            <p class="service-desc">Editorial, product, and campaign photography. Light shaped with purpose.</p>
+            <span class="service-link">Explore →</span>
+            <img class="service-preview cine-grade" loading="lazy" alt="Fashion editorial portrait in dramatic side lighting"
+                 src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=640&auto=format&fit=crop" />
+          </article>
+
+          <article class="service-row">
+            <h3 class="service-name">Branding</h3>
+            <p class="service-desc">Identity systems, art direction, and design that make brands unmistakable.</p>
+            <span class="service-link">Explore →</span>
+            <img class="service-preview cine-grade" loading="lazy" alt="Premium brand materials flat lay on dark surface"
+                 src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=640&auto=format&fit=crop" />
+          </article>
+
+          <article class="service-row">
+            <h3 class="service-name">Digital Marketing</h3>
+            <p class="service-desc">Strategy, paid media, and funnels that turn attention into revenue.</p>
+            <span class="service-link">Explore →</span>
+            <img class="service-preview cine-grade" loading="lazy" alt="Abstract glowing data network visualization on dark background"
+                 src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=640&auto=format&fit=crop" />
+          </article>
+
+          <article class="service-row">
+            <h3 class="service-name">Social Media</h3>
+            <p class="service-desc">Content engines and community. Feeds people actually stop for.</p>
+            <span class="service-link">Explore →</span>
+            <img class="service-preview cine-grade" loading="lazy" alt="Hand holding phone with glowing social media feed"
+                 src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=640&auto=format&fit=crop" />
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Selected Work -->
+    <section class="work" id="work">
+      <div class="wrap">
+        <header class="section-header">
+          <p class="eyebrow">Selected Work</p>
+          <h2 class="h1" data-splitting>Recent projects. Lasting impact.</h2>
+        </header>
+
+        <div class="project-grid">
+          <div class="project-col">
+            <article class="project-card">
+              <div class="project-img-wrap">
+                <img class="parallax-img cine-grade" loading="lazy" alt="Nocturne — fashion film still at night under streetlight"
+                     src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=900&auto=format&fit=crop" />
+              </div>
+              <h3 class="project-title">Nocturne</h3>
+              <p class="project-tag">Film / Fashion Editorial</p>
+            </article>
+
+            <article class="project-card">
+              <div class="project-img-wrap">
+                <img class="parallax-img cine-grade" loading="lazy" alt="After Hours — friends at a rooftop bar during golden hour"
+                     src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=900&auto=format&fit=crop" />
+              </div>
+              <h3 class="project-title">After Hours</h3>
+              <p class="project-tag">Photography / Lifestyle</p>
+            </article>
+          </div>
+
+          <div class="project-col project-col-offset">
+            <article class="project-card">
+              <div class="project-img-wrap">
+                <img class="parallax-img cine-grade" loading="lazy" alt="Meridian — minimal tech office with dramatic lighting"
+                     src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=900&auto=format&fit=crop" />
+              </div>
+              <h3 class="project-title">Meridian</h3>
+              <p class="project-tag">Brand Identity / Tech</p>
+            </article>
+
+            <article class="project-card">
+              <div class="project-img-wrap">
+                <img class="parallax-img cine-grade" loading="lazy" alt="Signal — artist performing on stage under dramatic spotlight"
+                     src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=900&auto=format&fit=crop" />
+              </div>
+              <h3 class="project-title">Signal</h3>
+              <p class="project-tag">Digital Campaign / Music</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+      <div class="wrap about-grid">
+        <div class="about-text">
+          <p class="eyebrow">About Afterdawn</p>
+          <h2 class="h1" data-splitting>We work when the world <span class="accent">sleeps.</span></h2>
+          <p class="body-large">Afterdawn is a creative studio built for the obsessed. We are directors, photographers, designers, and strategists who believe the best ideas arrive after midnight.</p>
+          <p class="body-large">From concept to final cut, we handle every frame with intention. No templates. No shortcuts. Just work that makes people feel something.</p>
+
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-number" data-target="150" data-suffix="+">0</span>
+              <span class="stat-label">Projects Delivered</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number" data-target="12">0</span>
+              <span class="stat-label">Industry Awards</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number" data-target="8">0</span>
+              <span class="stat-label">Years of Craft</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-image">
+          <img class="parallax-img cine-grade" loading="lazy" alt="Creative director portrait in a dimly lit studio"
+               src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+      <div class="wrap">
+        <header class="section-header section-header-center">
+          <p class="eyebrow">Client Words</p>
+          <h2 class="h1" data-splitting>They trusted us with their story.</h2>
+        </header>
+
+        <div class="testimonial-row">
+          <blockquote class=”testimonial-card”>
+            <p class=”testimonial-quote”>”Afterdawn didn't just film our campaign — they redefined how we see ourselves.”</p>
+            <footer>
+              <cite class=”testimonial-name”>Sarah Chen</cite>
+              <span class=”testimonial-role”>CMO, Meridian Tech</span>
+            </footer>
+          </blockquote>
+
+          <blockquote class=”testimonial-card”>
+            <p class=”testimonial-quote”>”The attention to detail is unreal. Every frame, every transition, every beat.”</p>
+            <footer>
+              <cite class=”testimonial-name”>Marcus Webb</cite>
+              <span class=”testimonial-role”>Creative Director, Nocturne</span>
+            </footer>
+          </blockquote>
+
+          <blockquote class=”testimonial-card”>
+            <p class=”testimonial-quote”>”They understood our brand better than we did. The result was pure magic.”</p>
+            <footer>
+              <cite class=”testimonial-name”>Elena Rossi</cite>
+              <span class=”testimonial-role”>Founder, After Hours</span>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <div class="wrap contact-grid">
+        <div class="contact-info">
+          <p class="eyebrow">Get in Touch</p>
+          <h2 class="display contact-headline" data-splitting>Let's make something <span class="accent">unforgettable.</span></h2>
+
+          <ul class="contact-details">
+            <li><a href="mailto:hello@afterdawn.studio">hello@afterdawn.studio</a></li>
+            <li>+1 (555) 234-5678</li>
+            <li>Los Angeles, CA</li>
+          </ul>
+
+          <div class="social-links">
+            <a href="#" rel="noopener">Instagram</a>
+            <a href="#" rel="noopener">Vimeo</a>
+            <a href="#" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required />
+          </div>
+          <div class="field">
+            <label for="service">Service</label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected>What do you need?</option>
+              <option>Film Production</option>
+              <option>Photography</option>
+              <option>Branding</option>
+              <option>Digital Marketing</option>
+              <option>Social Media</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="Tell us about your project" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <p>© 2025 Afterdawn Studio. All rights reserved.</p>
+      <span class="footer-mark">Afterdawn</span>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+    </div><!-- /#smooth-content -->
+  </div><!-- /#smooth-wrapper -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
