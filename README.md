@@ -40,7 +40,6 @@ A single-page creative studio website for **Afterdawn**, a production company of
 ├── index.html          # Main page
 ├── styles.css          # All styles (tokens → layout → components → motion)
 ├── script.js           # All JavaScript (smooth scroll, cursor, animations, form)
-├── PRD.md              # Product Requirements Document (design spec)
 └── README.md           # This file
 ```
 
