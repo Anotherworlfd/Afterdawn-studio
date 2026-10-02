@@ -1,11 +1,8 @@
-/* ============================================================
-   AFTERDAWN — Creative Studio
-   Design tokens → layout → components → motion
-   ============================================================ */
 
-/* ---------- 1. Tokens ---------- */
+
+
 :root {
-  /* Color */
+  
   --bg-primary: #1a1a1a;
   --bg-secondary: #242424;
   --bg-tertiary: #2e2e2e;
@@ -15,11 +12,11 @@
   --accent-hover: #f07062;
   --border: #3a3a3a;
 
-  /* Type */
+  
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  /* Fluid type scale */
+  
   --fs-display: clamp(3rem, 8.5vw, 6rem);
   --fs-h1: clamp(2.25rem, 5.5vw, 3.75rem);
   --fs-h2: clamp(1.5rem, 3vw, 2.25rem);
@@ -28,7 +25,7 @@
   --fs-body: 1rem;
   --fs-caption: 0.75rem;
 
-  /* Spacing */
+  
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 2rem;
@@ -37,21 +34,21 @@
   --section-y: clamp(5rem, 11vw, 9.5rem);
   --gutter: clamp(1.25rem, 5vw, 5rem);
 
-  /* Shape */
+  
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;
 
-  /* Layout */
+  
   --max-w: 1280px;
   --nav-h: 72px;
 
-  /* Motion */
+  
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ---------- 2. Reset & base ---------- */
+
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -73,8 +70,7 @@ body {
 
 img, video { display: block; max-width: 100%; }
 
-/* Cinematic grade — applied to all photographic media.
-   Teal-orange balance, lifted contrast, gentle desaturation, filmic warmth. */
+
 .cine-grade {
   filter: contrast(1.12) saturate(0.88) brightness(0.94) sepia(0.12) hue-rotate(-8deg);
 }
@@ -111,7 +107,7 @@ ul { list-style: none; }
   border-radius: 2px;
 }
 
-/* Smooth-scroll wrapper */
+
 #smooth-wrapper {
   position: fixed;
   inset: 0;
@@ -122,7 +118,7 @@ ul { list-style: none; }
   will-change: transform;
 }
 
-/* ---------- 3. Typography ---------- */
+
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 600;
@@ -170,7 +166,7 @@ h1, h2, h3, h4 {
   color: var(--text-secondary);
 }
 
-/* ---------- 4. Layout ---------- */
+
 .wrap {
   width: 100%;
   max-width: var(--max-w);
@@ -188,7 +184,7 @@ h1, h2, h3, h4 {
 
 section { position: relative; }
 
-/* ---------- 5. Buttons ---------- */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -218,7 +214,7 @@ section { position: relative; }
 
 .btn-full { width: 100%; }
 
-/* ---------- 6. Custom cursor ---------- */
+
 .cursor-dot,
 .cursor-ring {
   position: fixed;
@@ -239,7 +235,7 @@ section { position: relative; }
   width: 88px; height: 88px;
   border: 1px solid var(--text-secondary);
   border-radius: 50%;
-  /* Fixed size; hover states use scale() only — no width/height animation */
+  
   transform: translate(-50%, -50%) scale(0.45);
   transition: opacity 0.3s ease, background 0.3s ease,
               border-color 0.3s ease, transform 0.3s var(--ease-out);
@@ -275,7 +271,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
   .cursor-dot, .cursor-ring { display: none; }
 }
 
-/* ---------- 7. Navigation ---------- */
+
 .nav {
   position: fixed;
   inset: 0 0 auto 0;
@@ -336,7 +332,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 .nav-toggle[aria-expanded="true"] span:first-child { transform: translateY(3.75px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.75px) rotate(-45deg); }
 
-/* ---------- 8. Hero ---------- */
+
 .hero {
   min-height: 100svh;
   display: flex;
@@ -357,9 +353,9 @@ body.cursor-active .cursor-ring { opacity: 1; }
   position: absolute;
   inset: 0;
   background:
-    /* Left-to-right: lighter so image shows through; text area still readable */
+    
     linear-gradient(90deg, rgba(26,26,26,0.7) 0%, rgba(26,26,26,0.25) 55%, rgba(26,26,26,0.45) 100%),
-    /* Top-to-bottom: lighter overall so video is visible as texture/mood */
+    
     linear-gradient(180deg, rgba(26,26,26,0.35) 0%, rgba(26,26,26,0.1) 40%, rgba(26,26,26,0.65) 100%);
 }
 
@@ -398,7 +394,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
   50% { transform: translate(-50%, 8px); }
 }
 
-/* ---------- 9. Services ---------- */
+
 .services { padding-block: var(--section-y); background: var(--bg-primary); }
 
 .service-list { border-top: 1px solid var(--border); }
@@ -474,7 +470,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
   transform: translateY(-50%) scale(1);
 }
 
-/* ---------- 10. Selected Work ---------- */
+
 .work {
   padding-block: var(--section-y);
   background: var(--bg-secondary);
@@ -533,7 +529,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
   color: var(--text-secondary);
 }
 
-/* ---------- 11. About ---------- */
+
 .about { padding-block: var(--section-y); background: var(--bg-primary); }
 
 .about-grid {
@@ -578,7 +574,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 }
 .about-image .parallax-img { height: 115%; }
 
-/* ---------- 12. Testimonials ---------- */
+
 .testimonials {
   padding-block: var(--section-y);
   background: var(--bg-secondary);
@@ -593,7 +589,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 .testimonial-card {
   background: var(--bg-primary);
   border-top: 3px solid var(--accent);
-  /* Square top corners so the accent border sits flush; round the bottom only */
+  
   border-radius: 0 0 var(--radius-md) var(--radius-md);
   padding: var(--space-lg) var(--space-md);
   display: flex;
@@ -624,7 +620,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
   color: var(--text-secondary);
 }
 
-/* ---------- 13. Contact ---------- */
+
 .contact { padding-block: var(--section-y); background: var(--bg-primary); }
 
 .contact-grid {
@@ -714,7 +710,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
   min-height: 1.25rem;
 }
 
-/* ---------- 14. Footer ---------- */
+
 .footer {
   background: var(--bg-secondary);
   border-top: 1px solid var(--border);
@@ -742,8 +738,8 @@ body.cursor-active .cursor-ring { opacity: 1; }
 .footer-links { display: flex; gap: var(--space-md); }
 .footer a:hover { color: var(--accent); }
 
-/* ---------- 15. Motion initial states ---------- */
-/* Elements start hidden for animation, but are revealed if JS fails or is slow */
+
+
 .js [data-reveal],
 .js .service-row,
 .js .project-card,
@@ -757,7 +753,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 .js .hero-ctas { opacity: 0; }
 .js .nav { opacity: 0; }
 
-/* No-JS fallback: content is always visible */
+
 .no-js [data-reveal],
 .no-js .service-row,
 .no-js .project-card,
@@ -774,9 +770,9 @@ body.cursor-active .cursor-ring { opacity: 1; }
 .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
 .word-inner { display: inline-block; will-change: transform; }
 
-/* ---------- 16. Responsive ---------- */
+
 @media (min-width: 1024px) {
-  /* Left-biased editorial offset */
+  
   .wrap { padding-left: clamp(4rem, 11vw, 13rem); padding-right: clamp(2rem, 5vw, 5rem); }
   .nav { padding-inline: clamp(2rem, 5vw, 5rem); }
 }
@@ -829,7 +825,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
   .scroll-indicator { display: none; }
 }
 
-/* ---------- 17. Reduced motion ---------- */
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

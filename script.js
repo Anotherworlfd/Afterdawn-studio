@@ -1,7 +1,4 @@
-/* ============================================================
-   AFTERDAWN — Motion Layer
-   Lenis smooth scroll + GSAP ScrollTrigger + Splitting + custom cursor
-   ============================================================ */
+
 
 (function () {
   'use strict';
@@ -9,9 +6,7 @@
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-  /* ============================================================
-     1. SCROLLTRIGGER SMOOTH SCROLL (free alternative to ScrollSmoother)
-     ============================================================ */
+  
   let smoothScroll;
   if (!prefersReduced) {
     gsap.registerPlugin(ScrollTrigger);
@@ -20,27 +15,27 @@
     const content = document.querySelector('#smooth-content');
 
     if (wrapper && content) {
-      // Build a tall spacer so the native scrollbar reflects the full content height
+
       const setHeight = () => {
         document.body.style.height = content.offsetHeight + 'px';
       };
       setHeight();
       window.addEventListener('resize', setHeight);
 
-      // Smooth interpolation state
+
       const state = { y: 0 };
 
-      // RAF loop: smoothly interpolate toward the real scroll position
+
       function smoothRaf() {
         const target = window.scrollY || window.pageYOffset;
-        state.y += (target - state.y) * 0.08; // lerp factor
+        state.y += (target - state.y) * 0.08;
         content.style.transform = 'translate3d(0, ' + (-state.y) + 'px, 0)';
         ScrollTrigger.update();
         requestAnimationFrame(smoothRaf);
       }
       requestAnimationFrame(smoothRaf);
 
-      // Proxy ScrollTrigger to the smooth-scroll content
+
       ScrollTrigger.scrollerProxy(wrapper, {
         scrollTop(value) {
           if (arguments.length) {
@@ -54,24 +49,20 @@
         pinType: 'transform'
       });
 
-      // Keep ScrollTrigger in sync with the smooth content
+
       ScrollTrigger.addEventListener('refresh', () => setHeight());
       ScrollTrigger.refresh();
 
       smoothScroll = { wrapper, content, state };
     }
   } else {
-    // No smooth scroll for reduced-motion users
+
     gsap.registerPlugin(ScrollTrigger);
   }
 
-  /* ============================================================
-     2. SPLITTING — split headlines into words
-     Preserves inline elements (e.g. <span class="accent">) so
-     colour accents survive the split.
-     ============================================================ */
+  
   function wrapWords(node, isLast) {
-    // Returns an array of DOM nodes with each word wrapped
+
     const out = [];
     node.childNodes.forEach((child) => {
       if (child.nodeType === Node.TEXT_NODE) {
@@ -91,7 +82,7 @@
           }
         });
       } else if (child.nodeType === Node.ELEMENT_NODE) {
-        // Preserve the element (and its classes) but wrap its words
+
         const clone = child.cloneNode(false);
         wrapWords(child, isLast).forEach((n) => clone.appendChild(n));
         out.push(clone);
@@ -111,9 +102,7 @@
   }
   splitHeadlines();
 
-  /* ============================================================
-     3. CUSTOM CURSOR
-     ============================================================ */
+  
   if (!isTouch) {
     const dot = document.querySelector('.cursor-dot');
     const ring = document.querySelector('.cursor-ring');
@@ -142,7 +131,7 @@
       }
       animateCursor();
 
-      // Hover states
+
       document.querySelectorAll('a, button, .btn, .service-row, .project-card').forEach((el) => {
         el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
         el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
@@ -158,14 +147,12 @@
     }
   }
 
-  /* ============================================================
-     4. NAVIGATION
-     ============================================================ */
+  
   const nav = document.getElementById('nav');
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
 
-  // Scroll background
+
   function updateNav() {
     if (window.scrollY > 60) {
       nav.classList.add('is-scrolled');
@@ -176,7 +163,7 @@
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
 
-  // Mobile toggle
+
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', () => {
       const open = navToggle.getAttribute('aria-expanded') === 'true';
@@ -184,7 +171,7 @@
       navLinks.classList.toggle('is-open', !open);
     });
 
-    // Close on link click
+
     navLinks.querySelectorAll('a').forEach((a) => {
       a.addEventListener('click', () => {
         navToggle.setAttribute('aria-expanded', 'false');
@@ -193,7 +180,7 @@
     });
   }
 
-  // Smooth scroll for anchor links
+
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       const href = a.getAttribute('href');
@@ -204,8 +191,8 @@
         const offset = nav ? nav.offsetHeight : 0;
         const targetY = target.getBoundingClientRect().top + window.scrollY - offset;
         if (smoothScroll) {
-          // Tween a plain object and write the value to the scroll position,
-          // so we don't need the extra ScrollToPlugin.
+
+
           const proxy = { y: window.scrollY };
           gsap.to(proxy, {
             y: targetY,
@@ -220,12 +207,10 @@
     });
   });
 
-  /* ============================================================
-     5. GSAP ANIMATIONS
-     ============================================================ */
+  
 
-  // --- 5a. Page load sequence ---
-  // Set initial states BEFORE creating the timeline
+
+
   gsap.set('.hero-headline .word-inner', { y: 40, opacity: 0 });
   gsap.set('.hero-eyebrow', { y: 20, opacity: 0 });
   gsap.set('.hero-sub', { y: 20, opacity: 0 });
@@ -248,8 +233,8 @@
     .to('.hero-ctas', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 1.2)
     .to('.scroll-indicator', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 1.6);
 
-  // --- 5b. Section headlines (word reveal on scroll) ---
-  // Skip hero headline — already animated in loadTl
+
+
   document.querySelectorAll('section .h1[data-splitting], section .display[data-splitting]').forEach((el) => {
     const inners = el.querySelectorAll('.word-inner');
     if (!inners.length) return;
@@ -269,7 +254,7 @@
     });
   });
 
-  // --- 5c. Generic reveal (fade + slide up) ---
+
   document.querySelectorAll('[data-reveal]').forEach((el) => {
     gsap.set(el, { y: 50, opacity: 0 });
     gsap.to(el, {
@@ -285,7 +270,7 @@
     });
   });
 
-  // --- 5d. Service rows (slide from left with stagger) ---
+
   document.querySelectorAll('.service-row').forEach((row, i) => {
     gsap.set(row, { x: -40, opacity: 0 });
     gsap.to(row, {
@@ -302,7 +287,7 @@
     });
   });
 
-  // --- 5d-bis. Service row hover: slide description + link right ---
+
   if (!prefersReduced && !isTouch) {
     document.querySelectorAll('.service-row').forEach((row) => {
       const desc = row.querySelector('.service-desc');
@@ -336,7 +321,7 @@
     });
   }
 
-  // --- 5e. Project cards (staggered columns) ---
+
   document.querySelectorAll('.project-col').forEach((col, colIndex) => {
     col.querySelectorAll('.project-card').forEach((card, cardIndex) => {
       gsap.set(card, { y: 60, opacity: 0 });
@@ -355,7 +340,7 @@
     });
   });
 
-  // --- 5f. Testimonial cards (scale up) ---
+
   document.querySelectorAll('.testimonial-card').forEach((card, i) => {
     gsap.set(card, { scale: 0.95, opacity: 0 });
     gsap.to(card, {
@@ -372,7 +357,7 @@
     });
   });
 
-  // --- 5g. About content (slide from sides) ---
+
   const aboutText = document.querySelector('.about-text');
   const aboutImage = document.querySelector('.about-image');
   if (aboutText) {
@@ -404,7 +389,7 @@
     });
   }
 
-  // --- 5h. Contact columns (slide from sides) ---
+
   const contactInfo = document.querySelector('.contact-info');
   const contactForm = document.querySelector('.contact-form');
   if (contactInfo) {
@@ -436,7 +421,7 @@
     });
   }
 
-  // --- 5i. Stats counter animation ---
+
   document.querySelectorAll('.stat-number').forEach((stat) => {
     const target = parseInt(stat.dataset.target, 10);
     const suffix = stat.dataset.suffix || '';
@@ -461,7 +446,7 @@
     });
   });
 
-  // --- 5j. Parallax images ---
+
   if (!prefersReduced) {
     document.querySelectorAll('.parallax-img').forEach((img) => {
       gsap.to(img, {
@@ -477,9 +462,7 @@
     });
   }
 
-  /* ============================================================
-     6. FORM HANDLING
-     ============================================================ */
+  
   const form = document.getElementById('contactForm');
   const formStatus = document.getElementById('formStatus');
 
@@ -489,7 +472,7 @@
       const btn = form.querySelector('button[type="submit"]');
       const originalText = btn.textContent;
 
-      // Simple validation
+
       const name = form.querySelector('#name').value.trim();
       const email = form.querySelector('#email').value.trim();
       const service = form.querySelector('#service').value;
@@ -500,7 +483,7 @@
         return;
       }
 
-      // Simulate submit
+
       btn.textContent = 'Sending...';
       btn.disabled = true;
 
@@ -517,19 +500,17 @@
     });
   }
 
-  /* ============================================================
-     7. HERO VIDEO FALLBACK
-     ============================================================ */
+  
   const heroVideo = document.querySelector('.hero-video');
   if (heroVideo) {
     heroVideo.addEventListener('loadeddata', () => {
       heroVideo.classList.add('is-ready');
     });
-    // Fallback if video fails or is blocked
+
     heroVideo.addEventListener('error', () => {
       heroVideo.classList.add('is-ready');
     });
-    // Fallback after short timeout
+
     setTimeout(() => {
       if (!heroVideo.classList.contains('is-ready')) {
         heroVideo.classList.add('is-ready');
@@ -537,10 +518,7 @@
     }, 800);
   }
 
-  /* ============================================================
-     8. ACCESSIBILITY: main landmark id
-     (skip-link lives in the HTML so it works without JS)
-     ============================================================ */
+  
   const main = document.querySelector('main');
   if (main && !main.id) main.id = 'main';
 })();
