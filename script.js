@@ -132,6 +132,15 @@
       animateCursor();
 
 
+      // Hero headline text hover
+      document.querySelectorAll('.hero-headline').forEach(el => {
+        const textNodes = el.querySelectorAll('.word-inner');
+        textNodes.forEach(text => {
+          text.addEventListener('mouseenter', () => ring.classList.add('is-text-hover'));
+          text.addEventListener('mouseleave', () => ring.classList.remove('is-text-hover'));
+        });
+      });
+
       document.querySelectorAll('a, button, .btn, .service-row, .project-card').forEach((el) => {
         el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
         el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
@@ -500,25 +509,22 @@
     });
   }
 
-  
-  const heroVideo = document.querySelector('.hero-video');
-  if (heroVideo) {
-    heroVideo.addEventListener('loadeddata', () => {
-      heroVideo.classList.add('is-ready');
-    });
 
-    heroVideo.addEventListener('error', () => {
-      heroVideo.classList.add('is-ready');
-    });
+  const heroSlideshow = document.querySelector('.hero-slideshow');
+  if (heroSlideshow) {
+    const slides = heroSlideshow.querySelectorAll('.hero-slide');
+    if (slides.length > 1) {
+      let currentIdx = 0;
 
-    setTimeout(() => {
-      if (!heroVideo.classList.contains('is-ready')) {
-        heroVideo.classList.add('is-ready');
-      }
-    }, 800);
+      setInterval(() => {
+        slides[currentIdx].classList.remove('is-active');
+        currentIdx = (currentIdx + 1) % slides.length;
+        slides[currentIdx].classList.add('is-active');
+      }, 5000);
+    }
   }
 
-  
+
   const main = document.querySelector('main');
   if (main && !main.id) main.id = 'main';
 })();
