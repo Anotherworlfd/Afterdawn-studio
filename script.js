@@ -6,25 +6,22 @@
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-  
-  let smoothScroll;
-  if (!prefersReduced) {
-    gsap.registerPlugin(ScrollTrigger);
+  // Disable smooth scroll entirely on touch/mobile — use native scroll
+  let smoothScroll = null;
+  gsap.registerPlugin(ScrollTrigger);
 
+  if (!prefersReduced && !isTouch) {
     const wrapper = document.querySelector('#smooth-wrapper');
     const content = document.querySelector('#smooth-content');
 
     if (wrapper && content) {
-
       const setHeight = () => {
         document.body.style.height = content.offsetHeight + 'px';
       };
       setHeight();
       window.addEventListener('resize', setHeight);
 
-
       const state = { y: 0 };
-
 
       function smoothRaf() {
         const target = window.scrollY || window.pageYOffset;
@@ -34,7 +31,6 @@
         requestAnimationFrame(smoothRaf);
       }
       requestAnimationFrame(smoothRaf);
-
 
       ScrollTrigger.scrollerProxy(wrapper, {
         scrollTop(value) {
@@ -49,15 +45,11 @@
         pinType: 'transform'
       });
 
-
       ScrollTrigger.addEventListener('refresh', () => setHeight());
       ScrollTrigger.refresh();
 
       smoothScroll = { wrapper, content, state };
     }
-  } else {
-
-    gsap.registerPlugin(ScrollTrigger);
   }
 
   
@@ -297,6 +289,7 @@
   });
 
 
+  // Hover effects — desktop only to save performance
   if (!prefersReduced && !isTouch) {
     document.querySelectorAll('.service-row').forEach((row) => {
       const desc = row.querySelector('.service-desc');
@@ -456,7 +449,8 @@
   });
 
 
-  if (!prefersReduced) {
+  // Parallax is expensive on touch devices — desktop only
+  if (!prefersReduced && !isTouch) {
     document.querySelectorAll('.parallax-img').forEach((img) => {
       gsap.to(img, {
         yPercent: -12,
@@ -515,12 +509,33 @@
     const slides = heroSlideshow.querySelectorAll('.hero-slide');
     if (slides.length > 1) {
       let currentIdx = 0;
+      let timer = null;
 
-      setInterval(() => {
+      const advance = () => {
         slides[currentIdx].classList.remove('is-active');
         currentIdx = (currentIdx + 1) % slides.length;
         slides[currentIdx].classList.add('is-active');
-      }, 5000);
+      };
+      const start = () => { if (!timer) timer = setInterval(advance, 5000); };
+      const stop = () => { clearInterval(timer); timer = null; };
+
+      // Only cycle while the hero is on screen — saves CPU/battery
+      ScrollTrigger.create({
+        trigger: '.hero',
+        start: 'top bottom',
+        end: 'bottom top',
+        onEnter: start,
+        onEnterBack: start,
+        onLeave: stop,
+        onLeaveBack: stop,
+      });
+
+      // Pause when the tab is hidden
+      document.addEventListener('visibilitychange', () => {
+        document.hidden ? stop() : start();
+      });
+
+      start();
     }
   }
 

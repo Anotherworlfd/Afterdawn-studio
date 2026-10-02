@@ -71,8 +71,15 @@ body {
 img, video { display: block; max-width: 100%; }
 
 
+/* Cinematic color grade — expensive filter, desktop only */
 .cine-grade {
   filter: contrast(1.12) saturate(0.88) brightness(0.94) sepia(0.12) hue-rotate(-8deg);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cine-grade {
+    filter: none;
+  }
 }
 
 a { color: inherit; text-decoration: none; }
@@ -108,6 +115,7 @@ ul { list-style: none; }
 }
 
 
+/* Smooth scroll wrapper — desktop only */
 #smooth-wrapper {
   position: fixed;
   inset: 0;
@@ -116,6 +124,18 @@ ul { list-style: none; }
 }
 #smooth-content {
   will-change: transform;
+}
+
+/* On touch devices, disable smooth scroll and use native */
+@media (hover: none), (pointer: coarse) {
+  #smooth-wrapper {
+    position: static;
+    overflow: visible;
+  }
+  #smooth-content {
+    will-change: auto;
+    transform: none !important;
+  }
 }
 
 
@@ -299,6 +319,15 @@ body.cursor-active .cursor-ring { opacity: 1; }
   border-bottom-color: var(--border);
 }
 
+/* backdrop-filter is expensive on mobile during scroll — solid bg instead */
+@media (hover: none), (pointer: coarse) {
+  .nav.is-scrolled {
+    background: rgba(26, 26, 26, 0.97);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
 .nav-logo {
   font-family: var(--font-display);
   font-size: 1.25rem;
@@ -353,6 +382,14 @@ body.cursor-active .cursor-ring { opacity: 1; }
   position: relative;
   width: 100%;
   height: 100%;
+  contain: strict;
+}
+
+/* Mobile: single hero image, no slideshow */
+@media (hover: none), (pointer: coarse) {
+  .hero-slideshow .hero-slide:not(.is-active) {
+    display: none;
+  }
 }
 .hero-slide {
   position: absolute;
@@ -521,6 +558,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 }
 .project-card:hover .project-img-wrap::after { opacity: 0.12; }
 
+/* Parallax images — disable on mobile */
 .parallax-img {
   width: 100%;
   height: 115%;
@@ -530,6 +568,16 @@ body.cursor-active .cursor-ring { opacity: 1; }
   will-change: transform;
 }
 .project-card:hover .parallax-img { transform: scale(1.05); }
+
+@media (hover: none), (pointer: coarse) {
+  .parallax-img {
+    height: 100%;
+    will-change: auto;
+  }
+  .project-card:hover .parallax-img {
+    transform: scale(1);
+  }
+}
 
 .project-title {
   font-size: var(--fs-h3);
@@ -809,8 +857,6 @@ body.cursor-active .cursor-ring { opacity: 1; }
     align-items: flex-start;
     gap: var(--space-md);
     background: rgba(26, 26, 26, 0.97);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
     padding: var(--space-lg) var(--gutter) var(--space-xl);
     border-bottom: 1px solid var(--border);
     transform: translateY(-120%);
