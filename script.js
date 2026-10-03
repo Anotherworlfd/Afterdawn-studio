@@ -252,25 +252,151 @@
     });
   }
 
-  document.querySelectorAll('.project-col').forEach((col, colIndex) => {
-    col.querySelectorAll('.project-card').forEach((card, cardIndex) => {
-      gsap.set(card, { y: 60, opacity: 0 });
+  const workSection = document.querySelector('.work');
+  if (workSection && !prefersReduced && !isTouch) {
+    const workCards = Array.from(workSection.querySelectorAll('.project-card'));
+
+    workCards.forEach((card, i) => {
+      const dir = i % 2 === 0 ? -1 : 1;
+      gsap.set(card, {
+        xPercent: dir * 38,
+        yPercent: (i % 4) * 3 - 4,
+        rotation: dir * 2.4,
+        scale: 0.82,
+        opacity: 0,
+      });
+    });
+
+    gsap.to(workCards, {
+      xPercent: 0, yPercent: 0, rotation: 0, scale: 1, opacity: 1,
+      duration: 1.15, ease: 'power3.out', stagger: 0.09,
+      scrollTrigger: { trigger: workSection, start: 'top 70%', once: true },
+    });
+
+    const workDepth = (i) => 0.4 + (i / Math.max(1, workCards.length - 1)) * 0.9;
+    const quickX = workCards.map((card) =>
+      gsap.quickTo(card, 'x', { duration: 1.2, ease: 'power2.out' }));
+    const quickY = workCards.map((card) =>
+      gsap.quickTo(card, 'y', { duration: 1.2, ease: 'power2.out' }));
+
+    window.addEventListener('mousemove', (e) => {
+      const px = (e.clientX / window.innerWidth) * 2 - 1;
+      const py = (e.clientY / window.innerHeight) * 2 - 1;
+      workCards.forEach((card, i) => {
+        const d = workDepth(i);
+        quickX[i](-px * 22 * d);
+        quickY[i](-py * 18 * d);
+      });
+    }, { passive: true });
+  } else {
+    document.querySelectorAll('.project-card').forEach((card) => {
+      gsap.set(card, { opacity: 0, y: 24 });
       gsap.to(card, {
-        y: 0, opacity: 1, duration: 0.9,
-        delay: colIndex * 0.2 + cardIndex * 0.15,
-        ease: 'power2.out',
+        y: 0, opacity: 1, duration: 0.7, ease: 'power2.out',
         scrollTrigger: { trigger: card, start: 'top 85%', once: true },
       });
     });
-  });
+  }
 
-  document.querySelectorAll('.testimonial-card').forEach((card, i) => {
-    gsap.set(card, { scale: 0.95, opacity: 0 });
-    gsap.to(card, {
-      scale: 1, opacity: 1, duration: 0.7, delay: i * 0.15, ease: 'power2.out',
-      scrollTrigger: { trigger: card, start: 'top 85%', once: true },
-    });
-  });
+  const testimonialMarquee = document.querySelector('.testimonial-marquee');
+  const testimonialTrack = document.querySelector('.testimonial-track');
+
+  if (testimonialMarquee && testimonialTrack) {
+    const originalCards = Array.from(testimonialTrack.children);
+    const useNativeScroll = prefersReduced || isTouch;
+
+    gsap.set(testimonialMarquee, { opacity: 0, y: 20 });
+    gsap.set(originalCards, { scale: 0.95, opacity: 0 });
+    gsap.timeline({
+      scrollTrigger: { trigger: testimonialMarquee, start: 'top 85%', once: true },
+    })
+      .to(testimonialMarquee, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
+      .to(originalCards, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.7,
+        stagger: 0.15,
+        ease: 'power2.out',
+      }, 0.1);
+
+    const getGap = () => parseFloat(getComputedStyle(testimonialTrack).columnGap) || 0;
+
+    const getSetWidth = () =>
+      originalCards.reduce((sum, card) => sum + card.offsetWidth, 0) +
+      originalCards.length * getGap();
+
+    const getDuration = () => {
+      const value = getComputedStyle(testimonialMarquee).getPropertyValue('--t-duration').trim();
+      const seconds = parseFloat(value);
+      return Number.isFinite(seconds) && seconds > 0 ? seconds : 55;
+    };
+
+    const makeClone = (card) => {
+      const clone = card.cloneNode(true);
+      gsap.set(clone, { clearProps: 'transform,opacity,scale' });
+      clone.setAttribute('aria-hidden', 'true');
+      return clone;
+    };
+
+    if (useNativeScroll) {
+      testimonialMarquee.classList.add('is-native-scroll');
+      originalCards.forEach((card) => testimonialTrack.appendChild(makeClone(card)));
+    } else {
+      let marqueeTl = null;
+
+      const cloneSets = () => {
+        const viewport = window.innerWidth;
+        const setWidth = getSetWidth();
+        const existing = Math.floor(testimonialTrack.children.length / originalCards.length);
+        const needed = Math.max(2, Math.ceil((viewport * 2) / setWidth));
+        for (let i = existing; i < needed; i++) {
+          originalCards.forEach((card) => testimonialTrack.appendChild(makeClone(card)));
+        }
+      };
+
+      const buildTween = (startX, paused) => {
+        if (marqueeTl) marqueeTl.kill();
+        marqueeTl = gsap.to(testimonialTrack, {
+          x: startX - getSetWidth(),
+          duration: getDuration(),
+          ease: 'none',
+          repeat: -1,
+          paused: !!paused,
+        });
+      };
+
+      cloneSets();
+      buildTween(0, false);
+      ScrollTrigger.refresh();
+
+      const stopMarquee = () => marqueeTl.pause();
+      const startMarquee = () => marqueeTl.play();
+
+      testimonialMarquee.addEventListener('mouseenter', stopMarquee);
+      testimonialMarquee.addEventListener('mouseleave', startMarquee);
+      testimonialMarquee.addEventListener('focusin', stopMarquee);
+      testimonialMarquee.addEventListener('focusout', startMarquee);
+
+      document.addEventListener('visibilitychange', () => {
+        document.hidden ? stopMarquee() : startMarquee();
+      });
+
+      let resizeTimer = null;
+      const recalc = () => {
+        const currentX = marqueeTl ? gsap.getProperty(testimonialTrack, 'x') : 0;
+        const wasPaused = marqueeTl ? marqueeTl.paused() : false;
+        cloneSets();
+        buildTween(currentX, wasPaused);
+        ScrollTrigger.refresh();
+      };
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(recalc, 150);
+      });
+      window.addEventListener('load', recalc);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(recalc);
+    }
+  }
 
   const aboutText = document.querySelector('.about-text');
   const aboutImage = document.querySelector('.about-image');
@@ -331,7 +457,7 @@
   });
 
   if (!prefersReduced && !isTouch) {
-    document.querySelectorAll('.parallax-img').forEach((img) => {
+    document.querySelectorAll('.about-image .parallax-img').forEach((img) => {
       gsap.to(img, {
         yPercent: -12,
         ease: 'none',
