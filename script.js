@@ -134,6 +134,23 @@
     }
   }
 
+  const root = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = themeToggle ? themeToggle.querySelector('svg') : null;
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    themeToggle.setAttribute('aria-pressed', String(theme === 'light'));
+  }
+  if (themeToggle && themeIcon) {
+    applyTheme(root.getAttribute('data-theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      localStorage.setItem('theme', next);
+    });
+  }
+
   const nav = document.getElementById('nav');
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');

@@ -6,7 +6,14 @@
   <title>Afterdawn | Film Production Studio</title>
   <meta name="description" content="Afterdawn is a film production studio specializing in intimate, human stories. From first idea to final frame." />
 
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    document.documentElement.classList.add('js');
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,6 +39,13 @@
       <a href="#contact">Contact</a>
       <a href="#contact" class="btn btn-primary nav-cta">Start a Project</a>
     </div>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false">
+      <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+      </svg>
+    </button>
 
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span>
@@ -180,6 +194,20 @@
                   <img class="parallax-img cine-grade" loading="lazy"
                        alt="Aftersun — film still of a father and daughter at golden hour"
                        src="https://i.pinimg.com/736x/8b/60/e2/8b60e221040b3118eb1aec28428677d3.jpg" />
+                  <div class="movie-overlay">
+                    <div class="movie-meta">
+                      <span class="movie-label">Release Date</span>
+                      <span class="movie-value">2022</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Cinematography &amp; Color</span>
+                      <span class="movie-value">Charlotte Wells</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Starring</span>
+                      <span class="movie-value">Frankie Corio, Paul Mescal</span>
+                    </div>
+                  </div>
                 </div>
                 <h3 class="project-title">Aftersun</h3>
                 <p class="project-tag">2022 · Cinematography &amp; Color Grading</p>
@@ -190,6 +218,20 @@
                   <img class="parallax-img cine-grade" loading="lazy"
                        alt="Past Lives — two people facing each other across a window"
                        src="https://i.pinimg.com/736x/eb/5c/4f/eb5c4f704c8e4ad1ff0bd0f63d81c64b.jpg" />
+                  <div class="movie-overlay">
+                    <div class="movie-meta">
+                      <span class="movie-label">Release Date</span>
+                      <span class="movie-value">2023</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Direction &amp; Editing</span>
+                      <span class="movie-value">Celine Song</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Starring</span>
+                      <span class="movie-value">Greta Lee, Teo Yoo, John Magaro</span>
+                    </div>
+                  </div>
                 </div>
                 <h3 class="project-title">Past Lives</h3>
                 <p class="project-tag">2023 · Direction &amp; Editing</p>
@@ -200,6 +242,20 @@
                   <img class="parallax-img cine-grade" loading="lazy"
                        alt="Project Hail Mary — wide space-adjacent sci-fi landscape"
                        src="https://i.pinimg.com/736x/1e/e1/ff/1ee1ffeecbc0e0f287f24d1c55982ce5.jpg" />
+                  <div class="movie-overlay">
+                    <div class="movie-meta">
+                      <span class="movie-label">Release Date</span>
+                      <span class="movie-value">2026 (TBD)</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">VFX &amp; Sound</span>
+                      <span class="movie-value">Phil Lord, Chris Miller</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Starring</span>
+                      <span class="movie-value">Ryan Gosling, Sandra Hüller</span>
+                    </div>
+                  </div>
                 </div>
                 <h3 class="project-title">Project Hail Mary</h3>
                 <p class="project-tag">2026 · VFX &amp; Sound Design</p>
@@ -210,6 +266,20 @@
                   <img class="parallax-img cine-grade" loading="lazy"
                        alt="Marty Supreme — dramatic silhouette on a quiet urban rooftop"
                        src="https://i.pinimg.com/1200x/d0/e1/00/d0e100f7a92da77fd03f3d0cacc43f20.jpg" />
+                  <div class="movie-overlay">
+                    <div class="movie-meta">
+                      <span class="movie-label">Release Date</span>
+                      <span class="movie-value">2025</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Production &amp; Casting</span>
+                      <span class="movie-value">Josh Safdie</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Starring</span>
+                      <span class="movie-value">Timothée Chalamet, Gwyneth Paltrow</span>
+                    </div>
+                  </div>
                 </div>
                 <h3 class="project-title">Marty Supreme</h3>
                 <p class="project-tag">2025 · Production &amp; Casting</p>
@@ -222,6 +292,20 @@
                   <img class="parallax-img cine-grade" loading="lazy"
                        alt="The Worst Person in the World — a person looking out a rainy city window"
                        src="https://i.pinimg.com/1200x/b4/55/9b/b4559bc576bc2938d36ad6a26df81aa8.jpg" />
+                  <div class="movie-overlay">
+                    <div class="movie-meta">
+                      <span class="movie-label">Release Date</span>
+                      <span class="movie-value">2021</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Screenwriting &amp; Editing</span>
+                      <span class="movie-value">Joachim Trier</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Starring</span>
+                      <span class="movie-value">Renate Reinsve, Anders Danielsen Lie</span>
+                    </div>
+                  </div>
                 </div>
                 <h3 class="project-title">The Worst Person in the World</h3>
                 <p class="project-tag">2021 · Screenwriting &amp; Editing</p>
@@ -232,6 +316,20 @@
                   <img class="parallax-img cine-grade" loading="lazy"
                        alt="500 Days of Summer — soft warm summer light through leaves"
                        src="https://i.pinimg.com/1200x/b1/4d/eb/b14deb396deb500d15e11547cd1f25c8.jpg" />
+                  <div class="movie-overlay">
+                    <div class="movie-meta">
+                      <span class="movie-label">Release Date</span>
+                      <span class="movie-value">2009</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Music &amp; Sound</span>
+                      <span class="movie-value">Marc Webb</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Starring</span>
+                      <span class="movie-value">Joseph Gordon-Levitt, Zooey Deschanel</span>
+                    </div>
+                  </div>
                 </div>
                 <h3 class="project-title">500 Days of Summer</h3>
                 <p class="project-tag">2009 · Music &amp; Sound Design</p>
@@ -242,6 +340,20 @@
                   <img class="parallax-img cine-grade" loading="lazy"
                        alt="18x2 Beyond Youthful Days — a lone figure on an open road at dusk"
                        src="https://i.pinimg.com/1200x/65/2a/64/652a644aa9de668717f3577e6ea35151.jpg" />
+                  <div class="movie-overlay">
+                    <div class="movie-meta">
+                      <span class="movie-label">Release Date</span>
+                      <span class="movie-value">2024</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Cinematography &amp; Post</span>
+                      <span class="movie-value">Fujii Michihito</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Starring</span>
+                      <span class="movie-value">Greg Hsu, Kaya Kiyohara</span>
+                    </div>
+                  </div>
                 </div>
                 <h3 class="project-title">18x2 Beyond Youthful Days</h3>
                 <p class="project-tag">2024 · Cinematography &amp; Post-Production</p>
@@ -252,6 +364,20 @@
                   <img class="parallax-img cine-grade" loading="lazy"
                        alt="Sore — a film set lit with soft practicals and a camera in frame"
                        src="https://i.pinimg.com/736x/ce/39/23/ce3923a6c7af5a00c4aa29af6861d29a.jpg" />
+                  <div class="movie-overlay">
+                    <div class="movie-meta">
+                      <span class="movie-label">Release Date</span>
+                      <span class="movie-value">2025</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Direction &amp; Production Design</span>
+                      <span class="movie-value">Yandy Laurens</span>
+                    </div>
+                    <div class="movie-meta">
+                      <span class="movie-label">Starring</span>
+                      <span class="movie-value">Sheila Dara, Lutesha, Jerome Kurnia</span>
+                    </div>
+                  </div>
                 </div>
                 <h3 class="project-title">Sore</h3>
                 <p class="project-tag">2025 · Direction &amp; Production Design</p>
@@ -411,11 +537,11 @@
 
   <footer class="footer">
     <div class="wrap footer-inner">
-      <p>© 2025 Afterdawn Studio. All rights reserved.</p>
-      <span class="footer-mark">Afterdawn</span>
+      <p></p>
+      <span class="footer-mark"></span>
       <div class="footer-links">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
+        <a href="#"></a>
+        <a href="#"></a>
       </div>
     </div>
   </footer>
