@@ -1,0 +1,24 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Afterdawn logo mark">
+  <defs>
+    <linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd9a0"/>
+      <stop offset="0.55" stop-color="#f07062"/>
+      <stop offset="1" stop-color="#e85d4e"/>
+    </linearGradient>
+    <clipPath id="glowClip">
+      <path d="M60 24 L81.13 70 L38.87 70 Z"/>
+    </clipPath>
+  </defs>
+
+  <rect x="6" y="6" width="108" height="108" rx="8" fill="none" stroke="#f5f0e8" stroke-width="2.5"/>
+
+  <line x1="6" y1="70" x2="114" y2="70" stroke="#3a3a3a" stroke-width="2"/>
+
+  <path d="M60 24 L26 98 M60 24 L94 98" fill="none" stroke="#f5f0e8" stroke-width="4"/>
+
+  <path d="M60 24 L81.13 70 L38.87 70 Z" fill="url(#dawn)"/>
+
+  <circle cx="60" cy="58" r="12" fill="#ffd9a0" clip-path="url(#glowClip)"/>
+
+  <line x1="38.87" y1="70" x2="81.13" y2="70" stroke="#e85d4e" stroke-width="4"/>
+</svg>

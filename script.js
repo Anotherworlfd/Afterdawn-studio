@@ -1,23 +1,18 @@
-
-
 (function () {
   'use strict';
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-  // Disable smooth scroll entirely on touch/mobile — use native scroll
-  let smoothScroll = null;
   gsap.registerPlugin(ScrollTrigger);
 
+  let smoothScroll = null;
   if (!prefersReduced && !isTouch) {
     const wrapper = document.querySelector('#smooth-wrapper');
     const content = document.querySelector('#smooth-content');
 
     if (wrapper && content) {
-      const setHeight = () => {
-        document.body.style.height = content.offsetHeight + 'px';
-      };
+      const setHeight = () => { document.body.style.height = content.offsetHeight + 'px'; };
       setHeight();
       window.addEventListener('resize', setHeight);
 
@@ -34,9 +29,7 @@
 
       ScrollTrigger.scrollerProxy(wrapper, {
         scrollTop(value) {
-          if (arguments.length) {
-            window.scrollTo(0, value);
-          }
+          if (arguments.length) { window.scrollTo(0, value); }
           return state.y;
         },
         getBoundingClientRect() {
@@ -52,9 +45,7 @@
     }
   }
 
-  
   function wrapWords(node, isLast) {
-
     const out = [];
     node.childNodes.forEach((child) => {
       if (child.nodeType === Node.TEXT_NODE) {
@@ -74,7 +65,6 @@
           }
         });
       } else if (child.nodeType === Node.ELEMENT_NODE) {
-
         const clone = child.cloneNode(false);
         wrapWords(child, isLast).forEach((n) => clone.appendChild(n));
         out.push(clone);
@@ -94,7 +84,6 @@
   }
   splitHeadlines();
 
-  
   if (!isTouch) {
     const dot = document.querySelector('.cursor-dot');
     const ring = document.querySelector('.cursor-ring');
@@ -123,8 +112,6 @@
       }
       animateCursor();
 
-
-      // Hero headline text hover
       document.querySelectorAll('.hero-headline').forEach(el => {
         const textNodes = el.querySelectorAll('.word-inner');
         textNodes.forEach(text => {
@@ -137,7 +124,6 @@
         el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
         el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
       });
-
       document.querySelectorAll('.project-card').forEach((el) => {
         el.addEventListener('mouseenter', () => {
           ring.classList.remove('is-hover');
@@ -148,11 +134,9 @@
     }
   }
 
-  
   const nav = document.getElementById('nav');
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
-
 
   function updateNav() {
     if (window.scrollY > 60) {
@@ -164,15 +148,12 @@
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
 
-
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', () => {
       const open = navToggle.getAttribute('aria-expanded') === 'true';
       navToggle.setAttribute('aria-expanded', String(!open));
       navLinks.classList.toggle('is-open', !open);
     });
-
-
     navLinks.querySelectorAll('a').forEach((a) => {
       a.addEventListener('click', () => {
         navToggle.setAttribute('aria-expanded', 'false');
@@ -180,7 +161,6 @@
       });
     });
   }
-
 
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
@@ -192,8 +172,6 @@
         const offset = nav ? nav.offsetHeight : 0;
         const targetY = target.getBoundingClientRect().top + window.scrollY - offset;
         if (smoothScroll) {
-
-
           const proxy = { y: window.scrollY };
           gsap.to(proxy, {
             y: targetY,
@@ -208,33 +186,22 @@
     });
   });
 
-  
-
-
-
   gsap.set('.hero-headline .word-inner', { y: 40, opacity: 0 });
   gsap.set('.hero-eyebrow', { y: 20, opacity: 0 });
   gsap.set('.hero-sub', { y: 20, opacity: 0 });
   gsap.set('.hero-ctas', { y: 20, opacity: 0 });
 
   const loadTl = gsap.timeline({ delay: 0.15 });
-
   loadTl
     .to('.nav', { opacity: 1, duration: 0.5, ease: 'power2.out' })
     .to('.hero-video', { opacity: 1, duration: 1, ease: 'power2.out' }, 0.2)
     .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.5)
     .to('.hero-headline .word-inner', {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      stagger: 0.08,
-      ease: 'power3.out',
+      y: 0, opacity: 1, duration: 0.8, stagger: 0.08, ease: 'power3.out',
     }, 0.6)
     .to('.hero-sub', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 1.0)
     .to('.hero-ctas', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 1.2)
     .to('.scroll-indicator', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 1.6);
-
-
 
   document.querySelectorAll('section .h1[data-splitting], section .display[data-splitting]').forEach((el) => {
     const inners = el.querySelectorAll('.word-inner');
@@ -242,54 +209,27 @@
 
     gsap.set(inners, { y: 40, opacity: 0 });
     gsap.to(inners, {
-      y: 0,
-      opacity: 1,
-      duration: 0.75,
-      stagger: 0.06,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 82%',
-        once: true,
-      },
+      y: 0, opacity: 1, duration: 0.75, stagger: 0.06, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 82%', once: true },
     });
   });
-
 
   document.querySelectorAll('[data-reveal]').forEach((el) => {
     gsap.set(el, { y: 50, opacity: 0 });
     gsap.to(el, {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 82%',
-        once: true,
-      },
+      y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 82%', once: true },
     });
   });
-
 
   document.querySelectorAll('.service-row').forEach((row, i) => {
     gsap.set(row, { x: -40, opacity: 0 });
     gsap.to(row, {
-      x: 0,
-      opacity: 1,
-      duration: 0.7,
-      delay: i * 0.1,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: row,
-        start: 'top 85%',
-        once: true,
-      },
+      x: 0, opacity: 1, duration: 0.7, delay: i * 0.1, ease: 'power2.out',
+      scrollTrigger: { trigger: row, start: 'top 85%', once: true },
     });
   });
 
-
-  // Hover effects — desktop only to save performance
   if (!prefersReduced && !isTouch) {
     document.querySelectorAll('.service-row').forEach((row) => {
       const desc = row.querySelector('.service-desc');
@@ -301,128 +241,70 @@
 
       row.addEventListener('mouseenter', () => {
         targets.forEach((el) => {
-          gsap.to(el, {
-            x: shift(el),
-            duration: 0.5,
-            ease: 'power3.out',
-            overwrite: 'auto',
-          });
+          gsap.to(el, { x: shift(el), duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
         });
       });
-
       row.addEventListener('mouseleave', () => {
         targets.forEach((el) => {
-          gsap.to(el, {
-            x: 0,
-            duration: 0.45,
-            ease: 'power3.out',
-            overwrite: 'auto',
-          });
+          gsap.to(el, { x: 0, duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
         });
       });
     });
   }
 
-
   document.querySelectorAll('.project-col').forEach((col, colIndex) => {
     col.querySelectorAll('.project-card').forEach((card, cardIndex) => {
       gsap.set(card, { y: 60, opacity: 0 });
       gsap.to(card, {
-        y: 0,
-        opacity: 1,
-        duration: 0.9,
+        y: 0, opacity: 1, duration: 0.9,
         delay: colIndex * 0.2 + cardIndex * 0.15,
         ease: 'power2.out',
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 85%',
-          once: true,
-        },
+        scrollTrigger: { trigger: card, start: 'top 85%', once: true },
       });
     });
   });
 
-
   document.querySelectorAll('.testimonial-card').forEach((card, i) => {
     gsap.set(card, { scale: 0.95, opacity: 0 });
     gsap.to(card, {
-      scale: 1,
-      opacity: 1,
-      duration: 0.7,
-      delay: i * 0.15,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: card,
-        start: 'top 85%',
-        once: true,
-      },
+      scale: 1, opacity: 1, duration: 0.7, delay: i * 0.15, ease: 'power2.out',
+      scrollTrigger: { trigger: card, start: 'top 85%', once: true },
     });
   });
-
 
   const aboutText = document.querySelector('.about-text');
   const aboutImage = document.querySelector('.about-image');
   if (aboutText) {
     gsap.set(aboutText, { x: -30, opacity: 0 });
     gsap.to(aboutText, {
-      x: 0,
-      opacity: 1,
-      duration: 0.9,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: aboutText,
-        start: 'top 80%',
-        once: true,
-      },
+      x: 0, opacity: 1, duration: 0.9, ease: 'power2.out',
+      scrollTrigger: { trigger: aboutText, start: 'top 80%', once: true },
     });
   }
   if (aboutImage) {
     gsap.set(aboutImage, { x: 30, opacity: 0 });
     gsap.to(aboutImage, {
-      x: 0,
-      opacity: 1,
-      duration: 0.9,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: aboutImage,
-        start: 'top 80%',
-        once: true,
-      },
+      x: 0, opacity: 1, duration: 0.9, ease: 'power2.out',
+      scrollTrigger: { trigger: aboutImage, start: 'top 80%', once: true },
     });
   }
-
 
   const contactInfo = document.querySelector('.contact-info');
   const contactForm = document.querySelector('.contact-form');
   if (contactInfo) {
     gsap.set(contactInfo, { x: -30, opacity: 0 });
     gsap.to(contactInfo, {
-      x: 0,
-      opacity: 1,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: contactInfo,
-        start: 'top 80%',
-        once: true,
-      },
+      x: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+      scrollTrigger: { trigger: contactInfo, start: 'top 80%', once: true },
     });
   }
   if (contactForm) {
     gsap.set(contactForm, { x: 30, opacity: 0 });
     gsap.to(contactForm, {
-      x: 0,
-      opacity: 1,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: contactForm,
-        start: 'top 80%',
-        once: true,
-      },
+      x: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+      scrollTrigger: { trigger: contactForm, start: 'top 80%', once: true },
     });
   }
-
 
   document.querySelectorAll('.stat-number').forEach((stat) => {
     const target = parseInt(stat.dataset.target, 10);
@@ -448,8 +330,6 @@
     });
   });
 
-
-  // Parallax is expensive on touch devices — desktop only
   if (!prefersReduced && !isTouch) {
     document.querySelectorAll('.parallax-img').forEach((img) => {
       gsap.to(img, {
@@ -465,7 +345,6 @@
     });
   }
 
-  
   const form = document.getElementById('contactForm');
   const formStatus = document.getElementById('formStatus');
 
@@ -475,17 +354,15 @@
       const btn = form.querySelector('button[type="submit"]');
       const originalText = btn.textContent;
 
-
       const name = form.querySelector('#name').value.trim();
       const email = form.querySelector('#email').value.trim();
-      const service = form.querySelector('#service').value;
+      const format = form.querySelector('#format').value;
       const message = form.querySelector('#message').value.trim();
 
-      if (!name || !email || !service || !message) {
+      if (!name || !email || !format || !message) {
         formStatus.textContent = 'Please fill in all fields.';
         return;
       }
-
 
       btn.textContent = 'Sending...';
       btn.disabled = true;
@@ -495,17 +372,13 @@
         btn.disabled = false;
         formStatus.textContent = 'Message sent! We\'ll be in touch soon.';
         form.reset();
-
-        setTimeout(() => {
-          formStatus.textContent = '';
-        }, 4000);
+        setTimeout(() => { formStatus.textContent = ''; }, 4000);
       }, 1200);
     });
   }
 
-
   const heroSlideshow = document.querySelector('.hero-slideshow');
-  if (heroSlideshow) {
+  if (heroSlideshow && !isTouch) {
     const slides = heroSlideshow.querySelectorAll('.hero-slide');
     if (slides.length > 1) {
       let currentIdx = 0;
@@ -519,7 +392,6 @@
       const start = () => { if (!timer) timer = setInterval(advance, 5000); };
       const stop = () => { clearInterval(timer); timer = null; };
 
-      // Only cycle while the hero is on screen — saves CPU/battery
       ScrollTrigger.create({
         trigger: '.hero',
         start: 'top bottom',
@@ -530,7 +402,6 @@
         onLeaveBack: stop,
       });
 
-      // Pause when the tab is hidden
       document.addEventListener('visibilitychange', () => {
         document.hidden ? stop() : start();
       });
@@ -538,7 +409,6 @@
       start();
     }
   }
-
 
   const main = document.querySelector('main');
   if (main && !main.id) main.id = 'main';
