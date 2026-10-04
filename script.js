@@ -152,8 +152,43 @@
   }
 
   const nav = document.getElementById('nav');
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
+  const menuToggle = document.getElementById('menuToggle');
+  const menuLabel = document.getElementById('menuLabel');
+  const navDrawer = document.getElementById('navDrawer');
+  const drawerLinks = navDrawer ? navDrawer.querySelectorAll('a') : [];
+  let focusedBeforeOpen = null;
+
+  function setLock(lock) {
+    document.documentElement.style.overflow = lock ? 'hidden' : '';
+    document.body.style.overflow = lock ? 'hidden' : '';
+  }
+
+  function closeMenu() {
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open menu');
+    menuLabel.textContent = 'MENU';
+    navDrawer.classList.remove('is-open');
+    navDrawer.setAttribute('aria-hidden', 'true');
+    nav.classList.remove('nav--drawer-open');
+    setLock(false);
+    if (focusedBeforeOpen) {
+      focusedBeforeOpen.focus();
+      focusedBeforeOpen = null;
+    }
+  }
+
+  function openMenu() {
+    focusedBeforeOpen = document.activeElement;
+    menuToggle.setAttribute('aria-expanded', 'true');
+    menuToggle.setAttribute('aria-label', 'Close menu');
+    menuLabel.textContent = 'CLOSE';
+    navDrawer.classList.add('is-open');
+    navDrawer.setAttribute('aria-hidden', 'false');
+    nav.classList.add('nav--drawer-open');
+    setLock(window.innerWidth < 768);
+    const firstLink = navDrawer.querySelector('.nav-drawer-link');
+    if (firstLink) firstLink.focus();
+  }
 
   function updateNav() {
     if (window.scrollY > 60) {
@@ -165,17 +200,37 @@
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
 
-  if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => {
-      const open = navToggle.getAttribute('aria-expanded') === 'true';
-      navToggle.setAttribute('aria-expanded', String(!open));
-      navLinks.classList.toggle('is-open', !open);
+  // IntersectionObserver toggles .nav--on-hero while the hero is behind the navbar
+  const heroSection = document.querySelector('.hero');
+  if (heroSection && nav) {
+    const heroObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          nav.classList.toggle('nav--on-hero', entry.isIntersecting);
+        });
+      },
+      { threshold: 0, rootMargin: `-${nav.offsetHeight || 72}px 0px 0px 0px` }
+    );
+    heroObserver.observe(heroSection);
+  }
+
+  if (menuToggle && navDrawer) {
+    menuToggle.addEventListener('click', () => {
+      if (menuToggle.getAttribute('aria-expanded') === 'true') closeMenu();
+      else openMenu();
     });
-    navLinks.querySelectorAll('a').forEach((a) => {
-      a.addEventListener('click', () => {
-        navToggle.setAttribute('aria-expanded', 'false');
-        navLinks.classList.remove('is-open');
-      });
+
+    drawerLinks.forEach((link) => link.addEventListener('click', closeMenu));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') closeMenu();
+    });
+
+    // Close when clicking outside the drawer (and not on the toggle)
+    document.addEventListener('click', (e) => {
+      if (menuToggle.getAttribute('aria-expanded') !== 'true') return;
+      if (navDrawer.contains(e.target) || menuToggle.contains(e.target)) return;
+      closeMenu();
     });
   }
 
@@ -521,18 +576,20 @@
   }
 
   const heroSlideshow = document.querySelector('.hero-slideshow');
-  if (heroSlideshow && !isTouch) {
+  if (heroSlideshow) {
     const slides = heroSlideshow.querySelectorAll('.hero-slide');
     if (slides.length > 1) {
       let currentIdx = 0;
       let timer = null;
 
-      const advance = () => {
+      const show = (idx) => {
         slides[currentIdx].classList.remove('is-active');
-        currentIdx = (currentIdx + 1) % slides.length;
+        currentIdx = ((idx % slides.length) + slides.length) % slides.length;
         slides[currentIdx].classList.add('is-active');
       };
-      const start = () => { if (!timer) timer = setInterval(advance, 5000); };
+      const next = () => show(currentIdx + 1);
+      const prev = () => show(currentIdx - 1);
+      const start = () => { if (!timer) timer = setInterval(next, 5000); };
       const stop = () => { clearInterval(timer); timer = null; };
 
       ScrollTrigger.create({
@@ -548,6 +605,19 @@
       document.addEventListener('visibilitychange', () => {
         document.hidden ? stop() : start();
       });
+
+      let touchStartX = 0;
+      heroSlideshow.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      heroSlideshow.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(dx) > 40) {
+          stop();
+          dx < 0 ? next() : prev();
+          start();
+        }
+      }, { passive: true });
 
       start();
     }

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Afterdawn | Film Production Studio</title>
-  <meta name="description" content="Afterdawn is a film production studio specializing in intimate, human stories. From first idea to final frame." />
+  <title>Lumina Films | Film Production Studio</title>
+  <meta name="description" content="Lumina Films is a film production studio specializing in intimate, human stories. From first idea to final frame." />
 
   <script>
     document.documentElement.classList.add('js');
@@ -29,28 +29,36 @@
   <div class="cursor-ring" aria-hidden="true"><span class="cursor-label">View</span></div>
 
   <nav class="nav" id="nav">
-    <a href="#top" class="nav-logo">
-      <img src="logo/logo.svg" alt="Afterdawn" style="height:28px;width:auto;">
-    </a>
-    <div class="nav-links" id="navLinks">
-      <a href="#work">Work</a>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a href="#contact" class="btn btn-primary nav-cta">Start a Project</a>
+    <div class="nav-inner">
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer">
+        <span class="menu-lines" aria-hidden="true">
+          <span></span>
+          <span></span>
+        </span>
+        <span class="menu-label" id="menuLabel">MENU</span>
+      </button>
+
+      <a href="#top" class="nav-logo">
+        <img src="logo/logo.svg" alt="Lumina" style="height:140px;width:120;">
+      </a>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false">
+        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+        </svg>
+      </button>
     </div>
-
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false">
-      <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="5"></circle>
-        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
-      </svg>
-    </button>
-
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span>
-    </button>
   </nav>
+
+  <div class="nav-drawer" id="navDrawer" aria-hidden="true">
+    <div class="nav-drawer-inner">
+      <a href="#services" class="nav-drawer-link">Services</a>
+      <a href="#work" class="nav-drawer-link">Work</a>
+      <a href="#about" class="nav-drawer-link">About</a>
+      <a href="#contact" class="nav-drawer-link">Contact</a>
+    </div>
+  </div>
 
 
   <div id="smooth-wrapper">
@@ -184,7 +192,7 @@
         <div class="wrap">
           <header class="section-header">
             <p class="eyebrow">Selected Work</p>
-            <h2 class="h1" data-splitting>Recent projects. Lasting impact.</h2>
+            <h2 class="h1" data-splitting>Our best projects</h2>
           </header>
 
           <div class="project-grid">
@@ -193,7 +201,7 @@
                 <div class="project-img-wrap">
                   <img class="parallax-img cine-grade" loading="lazy"
                        alt="Aftersun — film still of a father and daughter at golden hour"
-                       src="https://i.pinimg.com/736x/8b/60/e2/8b60e221040b3118eb1aec28428677d3.jpg" />
+                       src="https://i.pinimg.com/1200x/7a/ae/ae/7aaeae26819bf5c27d891d3870d1aea9.jpg" />
                   <div class="movie-overlay">
                     <div class="movie-meta">
                       <span class="movie-label">Release Date</span>
@@ -385,16 +393,16 @@
             </div>
           </div>
 
-          <p class="work-note">Afterdawn Studio - 2026.</p>
+          <p class="work-note">Lumina Films - 2026.</p>
         </div>
       </section>
 
       <section class="about" id="about">
         <div class="wrap about-grid">
           <div class="about-text">
-            <p class="eyebrow">About Afterdawn</p>
-            <h2 class="h1" data-splitting>We work when the world <span class="accent">sleeps.</span></h2>
-            <p class="body-large">Afterdawn is a film production studio. We are directors, cinematographers, editors, and producers who believe the best stories are shaped after dark.</p>
+            <p class="eyebrow">About</p>
+            <h2 class="h1" data-splitting>Lumina Films</h2>
+            <p class="body-large">Lumina Films is a film production studio. We are directors, cinematographers, editors, and producers who believe the best stories are shaped after dark.</p>
             <p class="body-large">From the first spark of an idea to the final festival cut, we handle every frame with intention. No templates. No shortcuts. Just films that make people feel something.</p>
 
             <div class="stats">
@@ -416,7 +424,7 @@
           <div class="about-image">
             <img class="parallax-img cine-grade" loading="lazy"
                  alt="Director reviewing footage on a monitor in a dimly lit studio"
-                 src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=800&auto=format&fit=crop" />
+                 src="logo/about.png" height="50" width="auto" />
           </div>
         </div>
       </section>
@@ -432,7 +440,7 @@
         <div class="testimonial-marquee">
           <div class="testimonial-track">
             <blockquote class="testimonial-card">
-              <p class="testimonial-quote">"Afterdawn didn't just shoot our film — they shaped the soul of it. Frame by frame."</p>
+              <p class="testimonial-quote">"Lumina Films didn't just shoot our film — they shaped the soul of it. Frame by frame."</p>
               <footer>
                 <cite class="testimonial-name">James Cole</cite>
                 <span class="testimonial-role">Producer</span>
@@ -456,7 +464,7 @@
             </blockquote>
 
             <blockquote class="testimonial-card">
-              <p class="testimonial-quote">"Working with Afterdawn felt like handing your dream to someone who actually cares."</p>
+              <p class="testimonial-quote">"Working with Lumina Films felt like handing your dream to someone who actually cares."</p>
               <footer>
                 <cite class="testimonial-name">Sarah Lin</cite>
                 <span class="testimonial-role">Screenwriter</span>
@@ -489,7 +497,7 @@
             <h2 class="display contact-headline" data-splitting>Let's make something <span class="accent">unforgettable.</span></h2>
 
             <ul class="contact-details">
-              <li><a href="mailto:hello@afterdawn.studio">hello@afterdawn.studio</a></li>
+              <li><a href="mailto:hello@lumina.production">hello@lumina.production</a></li>
               <li>+1 (555) 234-5678</li>
               <li>Los Angeles, CA</li>
             </ul>
