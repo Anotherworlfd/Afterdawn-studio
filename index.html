@@ -65,62 +65,21 @@
     <div id="smooth-content">
 
     <main id="top">
-      <section class="hero">
-        <div class="hero-media">
-          <div class="hero-slideshow" aria-label="Cinematic background slideshow">
-            <img class="hero-slide is-active cine-grade"
-                 src="https://wallpapercave.com/wp/wp11884071.jpg"
-                 alt="Aftersun film still — father and daughter at sunset"
-                 fetchpriority="high" decoding="async" />
-            <img class="hero-slide cine-grade"
-                 src="https://wallpaperaccess.com/full/25731504.jpg"
-                 alt="Behind the scenes on a film set, camera on dolly in warm light"
-                 loading="lazy" decoding="async" />
-            <img class="hero-slide cine-grade"
-                 src="https://wallpaperaccess.com/full/9399217.jpg"
-                 alt="Movie theater seats facing glowing screen"
-                 loading="lazy" decoding="async" />
-            <img class="hero-slide cine-grade"
-                 src="https://wallpaperaccess.com/full/1614203.jpg"
-                 alt="the worst person in the world"
-                 loading="lazy" decoding="async" />
-            <img class="hero-slide cine-grade"
-                 src="https://wallpaperaccess.com/full/25286595.jpg"
-                 alt="Vintage cinema projector casting light beam"
-                 loading="lazy" decoding="async" />
-            <img class="hero-slide cine-grade"
-                 src="https://wallpaperaccess.com/full/10925193.jpg"
-                 alt="Film reel and vintage movie camera close-up"
-                 loading="lazy" decoding="async" />
-            <img class="hero-slide cine-grade"
-                 src="https://i.pinimg.com/1200x/d5/2f/a1/d52fa1ed209a86bc1a9393a904839d5c.jpg"
-                 alt="Director's chair on film set with dramatic backlight"
-                 loading="lazy" decoding="async" />
-            <img class="hero-slide cine-grade"
-                 src="https://i.pinimg.com/736x/2c/ed/99/2ced9905699b21d0769c087cbea8e97b.jpg"
-                 alt="Golden hour beach scene — Aftersun inspired"
-                 loading="lazy" decoding="async" />
-          </div>
-          <div class="hero-overlay"></div>
-        </div>
+      <section class="hero" id="hero">
+        <h1 class="sr-only">Afterdawn — Film Production Studio</h1>
 
-        <div class="wrap hero-content">
-          <p class="eyebrow hero-eyebrow">Film Production Studio</p>
-          <h1 class="display hero-headline" data-splitting>
-            Stories that outlast the <span class="accent">dark.</span>
-          </h1>
-          <p class="body-large hero-sub">A film studio for intimate, human stories. From first idea to final frame.</p>
-          <div class="hero-ctas">
-            <a href="#work" class="btn btn-primary">View Our Work</a>
-            <a href="#contact" class="btn btn-secondary">Start a Project</a>
-          </div>
-        </div>
+        <div class="hero-image-stack" id="heroImageStack" aria-hidden="true"></div>
 
-        <div class="scroll-indicator" aria-hidden="true">
-          <svg width="20" height="28" viewBox="0 0 20 28" fill="none">
-            <path d="M10 2v22M3 17l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <nav class="hero-films" id="heroFilms" aria-label="Featured films">
+          <ul id="heroFilmsList"></ul>
+        </nav>
+
+        <a href="#services" class="hero-scroll" aria-label="Scroll to next section">
+          <span>Scroll</span>
+          <svg width="14" height="28" viewBox="0 0 14 28" fill="none" aria-hidden="true">
+            <path d="M7 1v24M1.5 19.5L7 25l5.5-5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </div>
+        </a>
       </section>
 
       <section class="services" id="services">

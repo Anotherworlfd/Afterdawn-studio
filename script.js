@@ -4,6 +4,14 @@
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
+  
+  const films = [
+    { id: 0, title: 'Aftersun', year: '2022', image: 'https://wallpapercave.com/wp/wp11884121.jpg' },
+    { id: 1, title: 'Past Lives', year: '2023', image: 'https://wallpapercave.com/wp/wp12433074.jpg' },
+    { id: 2, title: 'Marty Supreme', year: '2025', image: 'https://wallpapercave.com/wp/wp16080634.jpg' },
+    { id: 3, title: 'Project Hail Mary', year: '2026', image: 'https://wallpapercave.com/wp/wp16563818.webp' },
+  ];
+
   gsap.registerPlugin(ScrollTrigger);
 
   let smoothScroll = null;
@@ -575,52 +583,128 @@
     });
   }
 
-  const heroSlideshow = document.querySelector('.hero-slideshow');
-  if (heroSlideshow) {
-    const slides = heroSlideshow.querySelectorAll('.hero-slide');
-    if (slides.length > 1) {
-      let currentIdx = 0;
-      let timer = null;
 
-      const show = (idx) => {
-        slides[currentIdx].classList.remove('is-active');
-        currentIdx = ((idx % slides.length) + slides.length) % slides.length;
-        slides[currentIdx].classList.add('is-active');
-      };
-      const next = () => show(currentIdx + 1);
-      const prev = () => show(currentIdx - 1);
-      const start = () => { if (!timer) timer = setInterval(next, 5000); };
-      const stop = () => { clearInterval(timer); timer = null; };
+  const heroImageStack = document.getElementById('heroImageStack');
+  const heroFilmsList = document.getElementById('heroFilmsList');
+  let currentFilmIdx = 0;
+  let autoplayTimer = null;
+  const autoplayInterval = 5000;
 
-      ScrollTrigger.create({
-        trigger: '.hero',
-        start: 'top bottom',
-        end: 'bottom top',
-        onEnter: start,
-        onEnterBack: start,
-        onLeave: stop,
-        onLeaveBack: stop,
-      });
+  
+  const preloadImage = (src) => {
+    const img = new Image();
+    img.src = src;
+    return img;
+  };
+  films.forEach((film) => {
+    preloadImage(film.image);
+  });
 
-      document.addEventListener('visibilitychange', () => {
-        document.hidden ? stop() : start();
-      });
+  // Build image stack
+  films.forEach((film, idx) => {
+    const img = document.createElement('img');
+    img.src = film.image;
+    img.alt = film.title;
+    img.className = `hero-image ${idx === 0 ? 'is-active' : ''}`;
+    img.loading = idx === 0 ? 'eager' : 'lazy';
+    heroImageStack.appendChild(img);
+  });
 
-      let touchStartX = 0;
-      heroSlideshow.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
-      heroSlideshow.addEventListener('touchend', (e) => {
-        const dx = e.changedTouches[0].screenX - touchStartX;
-        if (Math.abs(dx) > 40) {
-          stop();
-          dx < 0 ? next() : prev();
-          start();
-        }
-      }, { passive: true });
+ 
+  films.forEach((film, idx) => {
+    const li = document.createElement('li');
+    li.setAttribute('aria-current', idx === 0 ? 'true' : 'false');
+    const a = document.createElement('a');
+    a.href = `film.html?id=${film.id}`;
+    a.textContent = film.title;
+    const sup = document.createElement('sup');
+    sup.textContent = film.year;
+    a.appendChild(sup);
+    li.appendChild(a);
+    heroFilmsList.appendChild(li);
+  });
 
-      start();
+  function setActive(idx) {
+    const imgs = heroImageStack.querySelectorAll('.hero-image');
+    const lis = heroFilmsList.querySelectorAll('li');
+
+    imgs[currentFilmIdx]?.classList.remove('is-active');
+    lis[currentFilmIdx]?.setAttribute('aria-current', 'false');
+
+    currentFilmIdx = idx % films.length;
+    imgs[currentFilmIdx]?.classList.add('is-active');
+    lis[currentFilmIdx]?.setAttribute('aria-current', 'true');
+  }
+
+  function startAutoplay() {
+    if (prefersReduced) return;
+    if (autoplayTimer) clearInterval(autoplayTimer);
+    autoplayTimer = setInterval(() => {
+      setActive(currentFilmIdx + 1);
+    }, autoplayInterval);
+  }
+
+  function stopAutoplay() {
+    if (autoplayTimer) {
+      clearInterval(autoplayTimer);
+      autoplayTimer = null;
     }
+  }
+
+  
+  startAutoplay();
+
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stopAutoplay() : startAutoplay();
+  });
+
+ 
+  const filmList = document.getElementById('heroFilms');
+  if (filmList) {
+    filmList.addEventListener('mouseenter', stopAutoplay);
+    filmList.addEventListener('mouseleave', startAutoplay);
+
+    heroFilmsList.querySelectorAll('a').forEach((link, idx) => {
+      link.addEventListener('click', (e) => {
+        if (!isTouch) {
+          e.preventDefault();
+          setActive(idx);
+          startAutoplay();
+        }
+      });
+      link.addEventListener('focus', () => {
+        if (!isTouch) {
+          stopAutoplay();
+          setActive(idx);
+        }
+      });
+      link.addEventListener('blur', () => {
+        if (!isTouch) startAutoplay();
+      });
+    });
+  }
+
+  // Scroll to next section
+  const heroScroll = document.querySelector('.hero-scroll');
+  if (heroScroll) {
+    heroScroll.addEventListener('click', (e) => {
+      e.preventDefault();
+      const servicesSection = document.querySelector('#services');
+      if (servicesSection) {
+        const targetY = servicesSection.getBoundingClientRect().top + window.scrollY - (nav?.offsetHeight || 72);
+        if (smoothScroll) {
+          const proxy = { y: window.scrollY };
+          gsap.to(proxy, {
+            y: targetY,
+            duration: 1.1,
+            ease: 'power3.inOut',
+            onUpdate: () => window.scrollTo(0, proxy.y),
+          });
+        } else {
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }
+      }
+    });
   }
 
   const main = document.querySelector('main');
