@@ -31,7 +31,7 @@ A single-page film production studio website for **Afterdawn**, specializing in 
 | Vanilla JavaScript | Interactions, animations, form handling |
 | [GSAP](https://greensock.com/gsap/) + ScrollTrigger | Animations and scroll triggers |
 | [Splitting.js](https://splitting.js.org/) | Text splitting for word animations |
-| Google Fonts | Space Grotesk + Inter |
+| Google Fonts |
 | SVG | Vector logo marks and favicon |
 
 ---
@@ -93,10 +93,9 @@ afterdawn/
 ## Credits
 
 - Design & Development: Afterdawn Studio
-- Images: [Unsplash](https://unsplash.com)
+- Images: [Unsplash](https://unsplash.com), [Pinterest](https://pinterest.com)
 - Fonts: [Google Fonts](https://fonts.google.com)
 - Animation: [GSAP](https://greensock.com/gsap/)
-- Logo concept: Dawn Frame — film frame + rising sun
 
 ---
 
